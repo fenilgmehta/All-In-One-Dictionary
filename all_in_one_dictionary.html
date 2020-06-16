@@ -51,6 +51,12 @@
             setCookie("dictionary_"+checkbox_dom.id, ""+checkbox_dom.checked, 365*1000);
         }
 
+        function toggle_checkbox(div_dom){
+            var cbx = div_dom.children[0];
+            // cbx.checked = !cbx.checked;
+            update_settings(cbx);
+        }
+
         // ----------------------------------
 
         // const proxyurl = "https://cors-anywhere.herokuapp.com/";
@@ -139,11 +145,6 @@
 
         function load_9_google_images() {
             NewTab("https://www.google.co.in/images?q=" + get_word());
-        }
-
-        function toggle_checkbox(div_dom){
-            var cbx = div_dom.children[0];
-            cbx.checked = !cbx.checked;
         }
 
         $(document).ready(function(){
