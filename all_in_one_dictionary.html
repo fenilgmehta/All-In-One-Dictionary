@@ -146,6 +146,21 @@
             cbx.checked = !cbx.checked;
         }
 
+        $(document).ready(function(){
+            window.addEventListener("keydown",function (e) {
+                if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)){
+                    if($('#word_to_search').is(":focus")) {
+                        console.log("Default action of CtrlF")
+                        return true;
+                    } else {
+                        e.preventDefault();
+                        console.log("Search is not in focus");
+                        $('#word_to_search').focus();
+                    }
+                }
+            })
+        })
+
     </script>
 
 </head>
@@ -155,7 +170,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="form-inline mr-auto" style="margin:5px;">
     <input class="form-control mr-sm-2" id="word_to_search" type="text" placeholder="Search a word">
-    <button class="btn btn-warning" onclick="load_all()"> All </button>
+    <button class="btn btn-warning" onclick="load_all()" id="button_all"> All </button>
   </div>
   <div style="color: white; font-size: 25">
     <strong>All In One Dictionary - 9 in 1</strong>
@@ -286,6 +301,15 @@
     <strong>Developer:</strong> Fenil G Mehta 🙏
   </p>
 </div>
+
+<script type="text/javascript">
+    document.getElementById("word_to_search").addEventListener("keyup", function(event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            document.getElementById("button_all").click();
+        }
+    });
+</script>
 
 </body>
 </html>
