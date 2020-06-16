@@ -47,6 +47,7 @@
         }
 
         function update_settings(checkbox_dom){
+            checkbox_dom.checked = !checkbox_dom.checked;
             setCookie("dictionary_"+checkbox_dom.id, ""+checkbox_dom.checked, 365*1000);
         }
 
@@ -140,6 +141,11 @@
             NewTab("https://www.google.co.in/images?q=" + get_word());
         }
 
+        function toggle_checkbox(div_dom){
+            var cbx = div_dom.children[0];
+            cbx.checked = !cbx.checked;
+        }
+
     </script>
 
 </head>
@@ -152,7 +158,7 @@
     <button class="btn btn-warning" onclick="load_all()"> All </button>
   </div>
   <div style="color: white; font-size: 25">
-  	<strong>All In One Dictionary - 9 in 1</strong>
+    <strong>All In One Dictionary - 9 in 1</strong>
   </div>
 </nav>
 
@@ -161,8 +167,8 @@
     <!-- 1. Cambridge -->
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <div class="input-group-text">
-          <input type="checkbox" style="transform: scale(1.5);" id="checkbox_1" onclick="update_settings(this);">
+        <div class="input-group-text" onclick="toggle_checkbox(this);">
+          <input type="checkbox" style="transform: scale(1.0);" id="checkbox_1" onclick="update_settings(this);" >
         </div>
       </div>
       <button class="btn btn-primary" style="width: 150px" onclick="load_1_cambridge()"> Cambridge </button>
@@ -171,8 +177,8 @@
     <!-- 2. Oxford -->
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <div class="input-group-text">
-          <input type="checkbox" style="transform: scale(1.5);" id="checkbox_2" onclick="update_settings(this);">
+        <div class="input-group-text" onclick="toggle_checkbox(this);">
+          <input type="checkbox" style="transform: scale(1.0);" id="checkbox_2" onclick="update_settings(this);">
         </div>
       </div>
       <button class="btn btn-primary" style="width: 150px" onclick="load_2_oxford()"> Oxford </button>
@@ -181,8 +187,8 @@
     <!-- 3. Merrian Webster -->
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <div class="input-group-text">
-          <input type="checkbox" style="transform: scale(1.5);" id="checkbox_3" onclick="update_settings(this);">
+        <div class="input-group-text" onclick="toggle_checkbox(this);">
+          <input type="checkbox" style="transform: scale(1.0);" id="checkbox_3" onclick="update_settings(this);">
         </div>
       </div>
       <button class="btn btn-primary" style="width: 150px" onclick="load_3_merrian_webster()"> Merrian Webster </button>
@@ -191,8 +197,8 @@
     <!-- 4. Collins -->
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <div class="input-group-text">
-          <input type="checkbox" style="transform: scale(1.5);" id="checkbox_4" onclick="update_settings(this);">
+        <div class="input-group-text" onclick="toggle_checkbox(this);">
+          <input type="checkbox" style="transform: scale(1.0);" id="checkbox_4" onclick="update_settings(this);">
         </div>
       </div>
       <button class="btn btn-primary" style="width: 150px" onclick="load_4_collins()"> Collins </button>
@@ -201,8 +207,8 @@
     <!-- 5. Dictionary.com -->
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <div class="input-group-text">
-          <input type="checkbox" style="transform: scale(1.5);" id="checkbox_5" onclick="update_settings(this);">
+        <div class="input-group-text" onclick="toggle_checkbox(this);">
+          <input type="checkbox" style="transform: scale(1.0);" id="checkbox_5" onclick="update_settings(this);">
         </div>
       </div>
       <button class="btn btn-primary" style="width: 150px" onclick="load_5_dictionary_dot_com()"> Dictionary.com </button>
@@ -211,8 +217,8 @@
     <!-- 6. Thesaurus -->
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <div class="input-group-text">
-          <input type="checkbox" style="transform: scale(1.5);" id="checkbox_6" onclick="update_settings(this);">
+        <div class="input-group-text" onclick="toggle_checkbox(this);">
+          <input type="checkbox" style="transform: scale(1.0);" id="checkbox_6" onclick="update_settings(this);">
         </div>
       </div>
       <button class="btn btn-primary" style="width: 150px" onclick="load_6_thesaurus()"> Thesaurus </button>
@@ -221,8 +227,8 @@
     <!-- 7. WordWeb -->
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <div class="input-group-text">
-          <input type="checkbox" style="transform: scale(1.5);" id="checkbox_7" onclick="update_settings(this);">
+        <div class="input-group-text" onclick="toggle_checkbox(this);">
+          <input type="checkbox" style="transform: scale(1.0);" id="checkbox_7" onclick="update_settings(this);">
         </div>
       </div>
       <button class="btn btn-primary" style="width: 150px" onclick="load_7_wordwebonline()"> WordWeb </button>
@@ -231,8 +237,8 @@
     <!-- 8. Google -->
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <div class="input-group-text">
-          <input type="checkbox" style="transform: scale(1.5);" id="checkbox_8" onclick="update_settings(this);">
+        <div class="input-group-text" onclick="toggle_checkbox(this);">
+          <input type="checkbox" style="transform: scale(1.0);" id="checkbox_8" onclick="update_settings(this);">
         </div>
       </div>
       <button class="btn btn-primary" style="width: 150px" onclick="load_8_google_meaning()"> Google </button>
@@ -241,8 +247,8 @@
     <!-- 9. Google Image -->
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <div class="input-group-text">
-          <input type="checkbox" style="transform: scale(1.5);" id="checkbox_9" onclick="update_settings(this);">
+        <div class="input-group-text" onclick="toggle_checkbox(this);">
+          <input type="checkbox" style="transform: scale(1.0);" id="checkbox_9" onclick="update_settings(this);">
         </div>
       </div>
       <button class="btn btn-primary" style="width: 150px" onclick="load_9_google_images()"> Google Image </button>
