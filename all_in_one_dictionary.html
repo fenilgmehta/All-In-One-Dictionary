@@ -1,191 +1,210 @@
 <html>
 <head>
 
-    <title>All In One Dictionary - 9 in 1</title>
+  <title>All In One Dictionary - 9 in 1</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 
-    <script type="text/javascript">
+  <script type="text/javascript">
 
-        function setCookie(cname, cvalue, exdays) {
-          var d = new Date();
-          d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-          var expires = "expires=" + d.toUTCString();
-          document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    function setCookie(cname, cvalue, exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+      var expires = "expires=" + d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+      var name = cname + "=";
+      var cookieArray = document.cookie.split(';');
+      for (var i = 0; i < cookieArray.length; i++) {
+        var c = cookieArray[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
         }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "true";  // default value for any cookie
+    }
 
-        function getCookie(cname) {
-          var name = cname + "=";
-          var cookieArray = document.cookie.split(';');
-          for(var i = 0; i < cookieArray.length; i++) {
-            var c = cookieArray[i];
-            while (c.charAt(0) == ' ') {
-              c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-              return c.substring(name.length, c.length);
-            }
+    // function checkCookie(cname) {
+    //   var cvalue = getCookie(cname);
+    //   if(cvalue == "") setCookie(cname, true, 365*1000);
+    // }
+
+    function load_settings_from_cookies() {
+      for (var i = 1; i <= 9; ++i) {
+        var element = document.getElementById("checkbox_" + i);
+        element.checked = (getCookie("dictionary_" + element.id) == "true");
+      }
+    }
+
+    function update_settings(checkbox_dom) {
+      checkbox_dom.checked = !checkbox_dom.checked;
+      setCookie("dictionary_" + checkbox_dom.id, "" + checkbox_dom.checked, 365 * 1000);
+    }
+
+    function toggle_checkbox(div_dom) {
+      var cbx = div_dom.children[0];
+      // cbx.checked = !cbx.checked;
+      update_settings(cbx);
+    }
+
+    // ----------------------------------
+
+    // const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    // https://dictionary.cambridge.org/dictionary/english/cool
+    // https://www.oxfordlearnersdictionaries.com/definition/english/cool
+    // https://www.merriam-webster.com/dictionary/cool
+    // https://www.collinsdictionary.com/dictionary/english/cool
+    // https://www.dictionary.com/browse/cool
+    // https://www.thesaurus.com/browse/cool
+    // https://www.wordwebonline.com/search.pl?w=cool
+    // https://www.google.co.in/search?q=define%3A+cool
+    // https://www.google.co.in/images?q=cool
+
+    // function openNewBackgroundTab(url_link){
+    //     var a = document.createElement("a");
+    //     a.href = url_link;
+    //     var evt = document.createEvent("MouseEvents");
+    //     //the tenth parameter of initMouseEvent sets ctrl key
+    //     evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, true, false, false, false, 0, null);
+    //     a.dispatchEvent(evt);
+    // }
+
+    function NewTab(url_link) {
+      document.getElementById("word_to_search").select();
+      window.open(url_link, "_blank");
+      // openNewBackgroundTab(url_link);
+    }
+
+    function get_word() {
+      var word_str = document.getElementById("word_to_search").value;
+      if (word_str == "") return "search";
+      return word_str;
+    }
+
+    function load_all() {
+      if (document.getElementById("checkbox_1").checked)
+        load_1_cambridge();
+      if (document.getElementById("checkbox_2").checked)
+        load_2_oxford();
+      if (document.getElementById("checkbox_3").checked)
+        load_3_merrian_webster();
+      if (document.getElementById("checkbox_4").checked)
+        load_4_collins();
+      if (document.getElementById("checkbox_5").checked)
+        load_5_dictionary_dot_com();
+      if (document.getElementById("checkbox_6").checked)
+        load_6_thesaurus();
+      if (document.getElementById("checkbox_7").checked)
+        load_7_wordwebonline();
+      if (document.getElementById("checkbox_8").checked)
+        load_8_google_meaning();
+      if (document.getElementById("checkbox_9").checked)
+        load_9_google_images();
+    }
+
+    function load_1_cambridge() {
+      NewTab("https://dictionary.cambridge.org/dictionary/english/" + get_word());
+    }
+
+    function load_2_oxford() {
+      NewTab("https://www.oxfordlearnersdictionaries.com/definition/english/" + get_word());
+    }
+
+    function load_3_merrian_webster() {
+      NewTab("https://www.merriam-webster.com/dictionary/" + get_word());
+    }
+
+    function load_4_collins() {
+      NewTab("https://www.collinsdictionary.com/dictionary/english/" + get_word());
+    }
+
+    function load_5_dictionary_dot_com() {
+      NewTab("https://www.dictionary.com/browse/" + get_word());
+    }
+
+    function load_6_thesaurus() {
+      NewTab("https://www.thesaurus.com/browse/" + get_word());
+    }
+
+    function load_7_wordwebonline() {
+      NewTab("https://www.wordwebonline.com/search.pl?w=" + get_word());
+    }
+
+    function load_8_google_meaning() {
+      NewTab("https://www.google.co.in/search?q=define%3A+" + get_word());
+    }
+
+    function load_9_google_images() {
+      NewTab("https://www.google.co.in/images?q=" + get_word());
+    }
+
+    $(document).ready(function () {
+      window.addEventListener("keydown", function (e) {
+        if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)) {
+          if ($('#word_to_search').is(":focus")) {
+            console.log("Default action of CtrlF")
+            return true;
+          } else {
+            e.preventDefault();
+            console.log("Search is not in focus");
+            $('#word_to_search').focus();
           }
-          return "true";  // default value for any cookie
         }
+      })
+    })
 
-        // function checkCookie(cname) {
-        //   var cvalue = getCookie(cname);
-        //   if(cvalue == "") setCookie(cname, true, 365*1000);
-        // }
+  </script>
 
-        function load_settings_from_cookies() {
-            for (var i = 1; i <= 9; ++i) {
-                var element = document.getElementById("checkbox_"+i);
-                element.checked = (getCookie("dictionary_"+element.id) == "true");
-            }
-        }
-
-        function update_settings(checkbox_dom){
-            checkbox_dom.checked = !checkbox_dom.checked;
-            setCookie("dictionary_"+checkbox_dom.id, ""+checkbox_dom.checked, 365*1000);
-        }
-
-        function toggle_checkbox(div_dom){
-            var cbx = div_dom.children[0];
-            // cbx.checked = !cbx.checked;
-            update_settings(cbx);
-        }
-
-        // ----------------------------------
-
-        // const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        // https://dictionary.cambridge.org/dictionary/english/cool
-        // https://www.oxfordlearnersdictionaries.com/definition/english/cool
-        // https://www.merriam-webster.com/dictionary/cool
-        // https://www.collinsdictionary.com/dictionary/english/cool
-        // https://www.dictionary.com/browse/cool
-        // https://www.thesaurus.com/browse/cool
-        // https://www.wordwebonline.com/search.pl?w=cool
-        // https://www.google.co.in/search?q=define%3A+cool
-        // https://www.google.co.in/images?q=cool
-
-        // function openNewBackgroundTab(url_link){
-        //     var a = document.createElement("a");
-        //     a.href = url_link;
-        //     var evt = document.createEvent("MouseEvents");
-        //     //the tenth parameter of initMouseEvent sets ctrl key
-        //     evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, true, false, false, false, 0, null);
-        //     a.dispatchEvent(evt);
-        // }
-
-        function NewTab(url_link) {
-            document.getElementById("word_to_search").select();
-            window.open(url_link, "_blank");
-            // openNewBackgroundTab(url_link);
-        }
-
-        function get_word() {
-            var word_str = document.getElementById("word_to_search").value;
-            if (word_str == "") return "search";
-            return word_str;
-        }
-        
-        function load_all() {
-            if(document.getElementById("checkbox_1").checked)
-                load_1_cambridge();
-            if(document.getElementById("checkbox_2").checked)
-                load_2_oxford();
-            if(document.getElementById("checkbox_3").checked)
-                load_3_merrian_webster();
-            if(document.getElementById("checkbox_4").checked)
-                load_4_collins();
-            if(document.getElementById("checkbox_5").checked)
-                load_5_dictionary_dot_com();
-            if(document.getElementById("checkbox_6").checked)
-                load_6_thesaurus();
-            if(document.getElementById("checkbox_7").checked)
-                load_7_wordwebonline();
-            if(document.getElementById("checkbox_8").checked)
-                load_8_google_meaning();
-            if(document.getElementById("checkbox_9").checked)
-                load_9_google_images();
-        }
-        
-        function load_1_cambridge() {
-            NewTab("https://dictionary.cambridge.org/dictionary/english/" + get_word());
-        }
-        
-        function load_2_oxford() {
-            NewTab("https://www.oxfordlearnersdictionaries.com/definition/english/" + get_word());
-        }
-        
-        function load_3_merrian_webster() {
-            NewTab("https://www.merriam-webster.com/dictionary/" + get_word());
-        }
-        
-        function load_4_collins() {
-            NewTab("https://www.collinsdictionary.com/dictionary/english/" + get_word());
-        }
-        
-        function load_5_dictionary_dot_com() {
-            NewTab("https://www.dictionary.com/browse/" + get_word());
-        }
-        
-        function load_6_thesaurus() {
-            NewTab("https://www.thesaurus.com/browse/" + get_word());
-        }
-
-        function load_7_wordwebonline() {
-            NewTab("https://www.wordwebonline.com/search.pl?w=" + get_word());
-        }
-
-        function load_8_google_meaning() {
-            NewTab("https://www.google.co.in/search?q=define%3A+" + get_word());
-        }
-
-        function load_9_google_images() {
-            NewTab("https://www.google.co.in/images?q=" + get_word());
-        }
-
-        $(document).ready(function(){
-            window.addEventListener("keydown",function (e) {
-                if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)){
-                    if($('#word_to_search').is(":focus")) {
-                        console.log("Default action of CtrlF")
-                        return true;
-                    } else {
-                        e.preventDefault();
-                        console.log("Search is not in focus");
-                        $('#word_to_search').focus();
-                    }
-                }
-            })
-        })
-
-    </script>
+  <style>
+    .all-btn {
+      min-width: 100%;
+      max-width: 100%;
+    }
+    @media (max-width: 575.99px) {
+      .all-btn {
+        min-width: 100%;
+        max-width: 100%;
+      }
+    }
+    @media (min-width: 576px) {
+      .all-btn {
+        min-width: 49px;
+        max-width: 49px;
+      }
+    }
+  </style>
 
 </head>
 
-<body onload="load_settings_from_cookies()">
+<body onload="load_settings_from_cookies()" style="min-width: 410px;">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="form-inline mr-auto" style="margin:5px;">
-    <input class="form-control mr-sm-2" id="word_to_search" type="text" placeholder="Search a word">
-    <button class="btn btn-warning" onclick="load_all()" id="button_all"> All </button>
-  </div>
-  <div style="color: white; font-size: 25">
-    <strong>All In One Dictionary - 9 in 1</strong>
-  </div>
-</nav>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="form-inline order-2 order-md-1 mr-0 mr-md-auto" style="min-width: 342px">
+      <input id="word_to_search" type="text" placeholder="Search a word" class="form-control mr-0 mr-sm-2 mb-2 mb-sm-0 query-input">
+      <button id="button_all" onclick="load_all()" class="btn btn-warning all-btn"> All </button>
+    </div>
+    <div class="order-1 order-md-2 text-left text-md-right" style="color: white; font-size: 25; min-width: 390px">
+      <strong>All In One Dictionary - 9 in 1</strong>
+    </div>
+  </nav>
 
-<div style="margin:10px; margin-left:20px; margin-top:20px">
+  <div style="margin:10px; margin-left:20px; margin-top:20px">
 
     <!-- 1. Cambridge -->
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <div class="input-group-text" onclick="toggle_checkbox(this);">
-          <input type="checkbox" style="transform: scale(1.0);" id="checkbox_1" onclick="update_settings(this);" >
+          <input type="checkbox" style="transform: scale(1.0);" id="checkbox_1" onclick="update_settings(this);">
         </div>
       </div>
       <button class="btn btn-primary" style="width: 150px" onclick="load_1_cambridge()"> Cambridge </button>
@@ -271,9 +290,9 @@
       <button class="btn btn-primary" style="width: 150px" onclick="load_9_google_images()"> Google Image </button>
     </div>
 
-</div>
+  </div>
 
-<!-- 
+<!--
 
 .danger {
   background-color: #ffdddd;
@@ -285,34 +304,34 @@
   border-left: 6px solid #2196F3;
 }
 
-
 .warning {
   background-color: #ffffcc;
   border-left: 6px solid #ffeb3b;
 }
 
 -->
-<div style="margin:20px; padding-top:12px; padding-left:12px; padding-bottom: 1px; background-color: #ffdddd; border-left: 6px solid #f44336">
-  <p>
-    <strong>NOTE:</strong> when opening multiple dictionary websites using the <B>All</B> button, please allow the website to open pop-ups
-  </p>
-  <p>
-    <strong>GitHub:</strong> please visit <a href="https://github.com/fenilgmehta/All-In-One-Dictionary"> https://github.com/fenilgmehta/All-In-One-Dictionary </a> for the source code
-  </p>
-  <p>
-    <strong>Developer:</strong> Fenil G Mehta 🙏
-  </p>
-</div>
 
-<script type="text/javascript">
-    document.getElementById("word_to_search").addEventListener("keyup", function(event) {
-        event.preventDefault();
-        if (event.keyCode === 13) {
-            document.getElementById("button_all").click();
-        }
+  <div style="margin:20px; padding-top:12px; padding-left:12px; padding-bottom: 1px; background-color: #ffdddd; border-left: 6px solid #f44336">
+    <p>
+      <strong>NOTE:</strong> when opening multiple dictionary websites using the <b>All</b> button, please allow the website to open pop-ups
+    </p>
+    <p>
+      <strong>GitHub:</strong> please visit <a href="https://github.com/fenilgmehta/All-In-One-Dictionary"> https://github.com/fenilgmehta/All-In-One-Dictionary </a> for the source code
+    </p>
+    <p>
+      <strong>Developer:</strong> Fenil G Mehta 🙏
+    </p>
+  </div>
+
+  <script type="text/javascript">
+    document.getElementById("word_to_search").addEventListener("keyup", function (event) {
+      event.preventDefault();
+      if (event.keyCode === 13) {
+        document.getElementById("button_all").click();
+      }
     });
-</script>
+  </script>
 
 </body>
-</html>
 
+</html>
